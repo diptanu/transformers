@@ -178,6 +178,10 @@ class PreTrainedTokenizerFast(PreTrainedTokenizerBase):
         super().__init__(**kwargs)
         self._tokenizer.encode_special_tokens = self.split_special_tokens
 
+        # The following logic will be replace with a single add_tokens once a fix is pushed to tokenizers
+        # allows converting a slow -> fast, non-legacy: if the `tokenizer.json` does not have all the added tokens
+        # uses the information stored in `added_tokens_decoder`.
+        # this is costly for fast tokenizers as we re-compute the regex again. But not all tokens are added tokens
         added_tokens_decoder_hash = {hash(repr(token)) for token in self.added_tokens_decoder}
         tokens_to_add = [
             token
