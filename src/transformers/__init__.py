@@ -535,6 +535,10 @@ _import_structure = {
         "Kosmos2Config",
         "Kosmos2Processor",
     ],
+    "models.kosmos2_5": [
+        "Kosmos2_5Config",
+        "Kosmos2_5Processor",
+    ],
     "models.layoutlm": [
         "LayoutLMConfig",
         "LayoutLMTokenizer",
@@ -2688,6 +2692,11 @@ else:
             "Kosmos2PreTrainedModel",
         ]
     )
+    _import_structure["modeling_kosmos2_5"] = [
+        "kosmos2_5ForConditionalGeneration",
+        "kosmos2_5Model",
+        "kosmos2_5PreTrainedModel",
+    ]
     _import_structure["models.layoutlm"].extend(
         [
             "LayoutLMForMaskedLM",
@@ -5655,6 +5664,11 @@ if TYPE_CHECKING:
         Kosmos2Config,
         Kosmos2Processor,
     )
+    from .models.kosmos2_5 import (
+        Kosmos2_5Config,
+        Kosmos2_5ImageProcessor,
+        Kosmos2_5Processor,
+    )
     from .models.layoutlm import (
         LayoutLMConfig,
         LayoutLMTokenizer,
@@ -7599,6 +7613,11 @@ if TYPE_CHECKING:
             Kosmos2ForConditionalGeneration,
             Kosmos2Model,
             Kosmos2PreTrainedModel,
+        )
+        from .models.kosmos2_5 import (
+            Kosmos2_5ForConditionalGeneration,
+            Kosmos2_5Model,
+            Kosmos2_PreTrainedModel,
         )
         from .models.layoutlm import (
             LayoutLMForMaskedLM,
