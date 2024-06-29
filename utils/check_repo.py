@@ -143,6 +143,9 @@ IGNORE_NON_TESTED = (
         "MllamaVisionModel",  # Building part of bigger (tested) model. # TODO: add tests
         "Emu3VQVAE",  # Building part of bigger (tested) model
         "Emu3TextModel",  # Building part of bigger (tested) model
+        "Kosmos2_5TextModel", # Building part of bigger (tested) model.
+        "Kosmos2_5TextForCausalLM", # Building part of bigger (tested) model.
+        "Kosmos2_5VisionModel" # Building part of bigger (tested) model.
     ]
 )
 
