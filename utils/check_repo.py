@@ -88,6 +88,9 @@ PRIVATE_MODELS = [
     "Idefics3VisionTransformer",
     "AriaTextForCausalLM",
     "AriaTextModel",
+    "Kosmos2_5TextModel",
+    "Kosmos2_5TextForCausalLM",
+    "Kosmos2_5VisionModel",
 ]
 
 # Update this list for models that are not tested with a comment explaining the reason it should not be.
@@ -95,256 +98,258 @@ PRIVATE_MODELS = [
 IGNORE_NON_TESTED = (
     PRIVATE_MODELS.copy()
     + [
-        # models to ignore for not tested
-        "RecurrentGemmaModel",  # Building part of bigger (tested) model.
-        "FuyuForCausalLM",  # Not tested fort now
-        "InstructBlipQFormerModel",  # Building part of bigger (tested) model.
-        "InstructBlipVideoQFormerModel",  # Building part of bigger (tested) model.
-        "UMT5EncoderModel",  # Building part of bigger (tested) model.
-        "Blip2QFormerModel",  # Building part of bigger (tested) model.
-        "ErnieMForInformationExtraction",
-        "FastSpeech2ConformerHifiGan",  # Already tested by SpeechT5HifiGan (# Copied from)
-        "FastSpeech2ConformerWithHifiGan",  # Built with two smaller (tested) models.
-        "GraphormerDecoderHead",  # Building part of bigger (tested) model.
-        "JukeboxVQVAE",  # Building part of bigger (tested) model.
-        "JukeboxPrior",  # Building part of bigger (tested) model.
-        "DecisionTransformerGPT2Model",  # Building part of bigger (tested) model.
-        "SegformerDecodeHead",  # Building part of bigger (tested) model.
-        "MgpstrModel",  # Building part of bigger (tested) model.
-        "BertLMHeadModel",  # Needs to be setup as decoder.
-        "MegatronBertLMHeadModel",  # Building part of bigger (tested) model.
-        "RealmBertModel",  # Building part of bigger (tested) model.
-        "RealmReader",  # Not regular model.
-        "RealmScorer",  # Not regular model.
-        "RealmForOpenQA",  # Not regular model.
-        "ReformerForMaskedLM",  # Needs to be setup as decoder.
-        "TFElectraMainLayer",  # Building part of bigger (tested) model (should it be a TFPreTrainedModel ?)
-        "TFRobertaForMultipleChoice",  # TODO: fix
-        "TFRobertaPreLayerNormForMultipleChoice",  # TODO: fix
-        "SeparableConv1D",  # Building part of bigger (tested) model.
-        "FlaxBartForCausalLM",  # Building part of bigger (tested) model.
-        "FlaxBertForCausalLM",  # Building part of bigger (tested) model. Tested implicitly through FlaxRobertaForCausalLM.
-        "OPTDecoderWrapper",
-        "TFSegformerDecodeHead",  # Not a regular model.
-        "AltRobertaModel",  # Building part of bigger (tested) model.
-        "BlipTextLMHeadModel",  # No need to test it as it is tested by BlipTextVision models
-        "TFBlipTextLMHeadModel",  # No need to test it as it is tested by BlipTextVision models
-        "BridgeTowerTextModel",  # No need to test it as it is tested by BridgeTowerModel model.
-        "BridgeTowerVisionModel",  # No need to test it as it is tested by BridgeTowerModel model.
-        "BarkCausalModel",  # Building part of bigger (tested) model.
-        "BarkModel",  # Does not have a forward signature - generation tested with integration tests.
-        "SeamlessM4TTextToUnitModel",  # Building part of bigger (tested) model.
-        "SeamlessM4TCodeHifiGan",  # Building part of bigger (tested) model.
-        "SeamlessM4TTextToUnitForConditionalGeneration",  # Building part of bigger (tested) model.
-        "ChameleonVQVAE",  # VQVAE here is used only for encoding (discretizing) and is tested as part of bigger model
-        "Qwen2VLModel",  # Building part of bigger (tested) model. Tested implicitly through Qwen2VLForConditionalGeneration.
-        "Qwen2_5_VLModel",  # Building part of bigger (tested) model. Tested implicitly through Qwen2_5_VLForConditionalGeneration.
-        "MllamaTextModel",  # Building part of bigger (tested) model. # TODO: add tests
-        "MllamaVisionModel",  # Building part of bigger (tested) model. # TODO: add tests
-        "Emu3VQVAE",  # Building part of bigger (tested) model
-        "Emu3TextModel",  # Building part of bigger (tested) model
-        "Kosmos2_5TextModel", # Building part of bigger (tested) model.
-        "Kosmos2_5TextForCausalLM", # Building part of bigger (tested) model.
-        "Kosmos2_5VisionModel" # Building part of bigger (tested) model.
+            # models to ignore for not tested
+            "RecurrentGemmaModel",  # Building part of bigger (tested) model.
+            "FuyuForCausalLM",  # Not tested fort now
+            "InstructBlipQFormerModel",  # Building part of bigger (tested) model.
+            "InstructBlipVideoQFormerModel",  # Building part of bigger (tested) model.
+            "UMT5EncoderModel",  # Building part of bigger (tested) model.
+            "Blip2QFormerModel",  # Building part of bigger (tested) model.
+            "ErnieMForInformationExtraction",
+            "FastSpeech2ConformerHifiGan",  # Already tested by SpeechT5HifiGan (# Copied from)
+            "FastSpeech2ConformerWithHifiGan",  # Built with two smaller (tested) models.
+            "GraphormerDecoderHead",  # Building part of bigger (tested) model.
+            "JukeboxVQVAE",  # Building part of bigger (tested) model.
+            "JukeboxPrior",  # Building part of bigger (tested) model.
+            "DecisionTransformerGPT2Model",  # Building part of bigger (tested) model.
+            "SegformerDecodeHead",  # Building part of bigger (tested) model.
+            "MgpstrModel",  # Building part of bigger (tested) model.
+            "BertLMHeadModel",  # Needs to be setup as decoder.
+            "MegatronBertLMHeadModel",  # Building part of bigger (tested) model.
+            "RealmBertModel",  # Building part of bigger (tested) model.
+            "RealmReader",  # Not regular model.
+            "RealmScorer",  # Not regular model.
+            "RealmForOpenQA",  # Not regular model.
+            "ReformerForMaskedLM",  # Needs to be setup as decoder.
+            "TFElectraMainLayer",  # Building part of bigger (tested) model (should it be a TFPreTrainedModel ?)
+            "TFRobertaForMultipleChoice",  # TODO: fix
+            "TFRobertaPreLayerNormForMultipleChoice",  # TODO: fix
+            "SeparableConv1D",  # Building part of bigger (tested) model.
+            "FlaxBartForCausalLM",  # Building part of bigger (tested) model.
+            "FlaxBertForCausalLM",  # Building part of bigger (tested) model. Tested implicitly through FlaxRobertaForCausalLM.
+            "OPTDecoderWrapper",
+            "TFSegformerDecodeHead",  # Not a regular model.
+            "AltRobertaModel",  # Building part of bigger (tested) model.
+            "BlipTextLMHeadModel",  # No need to test it as it is tested by BlipTextVision models
+            "TFBlipTextLMHeadModel",  # No need to test it as it is tested by BlipTextVision models
+            "BridgeTowerTextModel",  # No need to test it as it is tested by BridgeTowerModel model.
+            "BridgeTowerVisionModel",  # No need to test it as it is tested by BridgeTowerModel model.
+            "BarkCausalModel",  # Building part of bigger (tested) model.
+            "BarkModel",  # Does not have a forward signature - generation tested with integration tests.
+            "SeamlessM4TTextToUnitModel",  # Building part of bigger (tested) model.
+            "SeamlessM4TCodeHifiGan",  # Building part of bigger (tested) model.
+            "SeamlessM4TTextToUnitForConditionalGeneration",  # Building part of bigger (tested) model.
+            "ChameleonVQVAE",  # VQVAE here is used only for encoding (discretizing) and is tested as part of bigger model
+            "Qwen2VLModel",  # Building part of bigger (tested) model. Tested implicitly through Qwen2VLForConditionalGeneration.
+            "Qwen2_5_VLModel",  # Building part of bigger (tested) model. Tested implicitly through Qwen2_5_VLForConditionalGeneration.
+            "MllamaTextModel",  # Building part of bigger (tested) model. # TODO: add tests
+            "MllamaVisionModel",  # Building part of bigger (tested) model. # TODO: add tests
+            "Emu3VQVAE",  # Building part of bigger (tested) model
+            "Emu3TextModel",  # Building part of bigger (tested) model
+            "Kosmos2_5TextModel", # Building part of bigger (tested) model.
+            "Kosmos2_5TextForCausalLM", # Building part of bigger (tested) model.
+            "Kosmos2_5VisionModel" # Building part of bigger (tested) model.
+        ]
+    )
+
+    # Update this list with test files that don't have a tester with a `all_model_classes` variable and which don't
+    # trigger the common tests.
+    TEST_FILES_WITH_NO_COMMON_TESTS = [
+        "models/decision_transformer/test_modeling_decision_transformer.py",
+        "models/camembert/test_modeling_camembert.py",
+        "models/mt5/test_modeling_flax_mt5.py",
+        "models/mbart/test_modeling_mbart.py",
+        "models/mt5/test_modeling_mt5.py",
+        "models/pegasus/test_modeling_pegasus.py",
+        "models/camembert/test_modeling_tf_camembert.py",
+        "models/mt5/test_modeling_tf_mt5.py",
+        "models/xlm_roberta/test_modeling_tf_xlm_roberta.py",
+        "models/xlm_roberta/test_modeling_flax_xlm_roberta.py",
+        "models/xlm_prophetnet/test_modeling_xlm_prophetnet.py",
+        "models/xlm_roberta/test_modeling_xlm_roberta.py",
+        "models/vision_text_dual_encoder/test_modeling_vision_text_dual_encoder.py",
+        "models/vision_text_dual_encoder/test_modeling_tf_vision_text_dual_encoder.py",
+        "models/vision_text_dual_encoder/test_modeling_flax_vision_text_dual_encoder.py",
+        "models/decision_transformer/test_modeling_decision_transformer.py",
+        "models/bark/test_modeling_bark.py",
+        "models/kosmos2_5/test_modeling_kosmos2_5.py",
+        "models/kosmos2_5/test_processor_kosmos2_5.py",
     ]
-)
 
-# Update this list with test files that don't have a tester with a `all_model_classes` variable and which don't
-# trigger the common tests.
-TEST_FILES_WITH_NO_COMMON_TESTS = [
-    "models/decision_transformer/test_modeling_decision_transformer.py",
-    "models/camembert/test_modeling_camembert.py",
-    "models/mt5/test_modeling_flax_mt5.py",
-    "models/mbart/test_modeling_mbart.py",
-    "models/mt5/test_modeling_mt5.py",
-    "models/pegasus/test_modeling_pegasus.py",
-    "models/camembert/test_modeling_tf_camembert.py",
-    "models/mt5/test_modeling_tf_mt5.py",
-    "models/xlm_roberta/test_modeling_tf_xlm_roberta.py",
-    "models/xlm_roberta/test_modeling_flax_xlm_roberta.py",
-    "models/xlm_prophetnet/test_modeling_xlm_prophetnet.py",
-    "models/xlm_roberta/test_modeling_xlm_roberta.py",
-    "models/vision_text_dual_encoder/test_modeling_vision_text_dual_encoder.py",
-    "models/vision_text_dual_encoder/test_modeling_tf_vision_text_dual_encoder.py",
-    "models/vision_text_dual_encoder/test_modeling_flax_vision_text_dual_encoder.py",
-    "models/decision_transformer/test_modeling_decision_transformer.py",
-    "models/bark/test_modeling_bark.py",
-]
-
-# Update this list for models that are not in any of the auto MODEL_XXX_MAPPING. Being in this list is an exception and
-# should **not** be the rule.
-IGNORE_NON_AUTO_CONFIGURED = PRIVATE_MODELS.copy() + [
-    # models to ignore for model xxx mapping
-    "AlignTextModel",
-    "AlignVisionModel",
-    "ClapTextModel",
-    "ClapTextModelWithProjection",
-    "ClapAudioModel",
-    "ClapAudioModelWithProjection",
-    "Blip2TextModelWithProjection",
-    "Blip2VisionModelWithProjection",
-    "Blip2QFormerModel",
-    "Blip2VisionModel",
-    "ErnieMForInformationExtraction",
-    "FastSpeech2ConformerHifiGan",
-    "FastSpeech2ConformerWithHifiGan",
-    "GitVisionModel",
-    "GraphormerModel",
-    "GraphormerForGraphClassification",
-    "BlipForImageTextRetrieval",
-    "BlipForQuestionAnswering",
-    "BlipVisionModel",
-    "BlipTextLMHeadModel",
-    "BlipTextModel",
-    "BrosSpadeEEForTokenClassification",
-    "BrosSpadeELForTokenClassification",
-    "TFBlipForConditionalGeneration",
-    "TFBlipForImageTextRetrieval",
-    "TFBlipForQuestionAnswering",
-    "TFBlipVisionModel",
-    "TFBlipTextLMHeadModel",
-    "TFBlipTextModel",
-    "Swin2SRForImageSuperResolution",
-    "BridgeTowerForImageAndTextRetrieval",
-    "BridgeTowerForMaskedLM",
-    "BridgeTowerForContrastiveLearning",
-    "CLIPSegForImageSegmentation",
-    "CLIPSegVisionModel",
-    "CLIPSegTextModel",
-    "EsmForProteinFolding",
-    "GPTSanJapaneseModel",
-    "TimeSeriesTransformerForPrediction",
-    "InformerForPrediction",
-    "AutoformerForPrediction",
-    "PatchTSTForPretraining",
-    "PatchTSTForPrediction",
-    "JukeboxVQVAE",
-    "JukeboxPrior",
-    "SamModel",
-    "DPTForDepthEstimation",
-    "DecisionTransformerGPT2Model",
-    "GLPNForDepthEstimation",
-    "ViltForImagesAndTextClassification",
-    "ViltForImageAndTextRetrieval",
-    "ViltForTokenClassification",
-    "ViltForMaskedLM",
-    "PerceiverForMultimodalAutoencoding",
-    "PerceiverForOpticalFlow",
-    "SegformerDecodeHead",
-    "TFSegformerDecodeHead",
-    "FlaxBeitForMaskedImageModeling",
-    "BeitForMaskedImageModeling",
-    "ChineseCLIPTextModel",
-    "ChineseCLIPVisionModel",
-    "CLIPTextModelWithProjection",
-    "CLIPVisionModelWithProjection",
-    "ClvpForCausalLM",
-    "ClvpModel",
-    "GroupViTTextModel",
-    "GroupViTVisionModel",
-    "TFCLIPTextModel",
-    "TFCLIPVisionModel",
-    "TFGroupViTTextModel",
-    "TFGroupViTVisionModel",
-    "FlaxCLIPTextModel",
-    "FlaxCLIPTextModelWithProjection",
-    "FlaxCLIPVisionModel",
-    "FlaxWav2Vec2ForCTC",
-    "DetrForSegmentation",
-    "Pix2StructVisionModel",
-    "Pix2StructTextModel",
-    "ConditionalDetrForSegmentation",
-    "DPRReader",
-    "FlaubertForQuestionAnswering",
-    "FlavaImageCodebook",
-    "FlavaTextModel",
-    "FlavaImageModel",
-    "FlavaMultimodalModel",
-    "GPT2DoubleHeadsModel",
-    "GPTSw3DoubleHeadsModel",
-    "InstructBlipVisionModel",
-    "InstructBlipQFormerModel",
-    "InstructBlipVideoVisionModel",
-    "InstructBlipVideoQFormerModel",
-    "LayoutLMForQuestionAnswering",
-    "LukeForMaskedLM",
-    "LukeForEntityClassification",
-    "LukeForEntityPairClassification",
-    "LukeForEntitySpanClassification",
-    "MgpstrModel",
-    "OpenAIGPTDoubleHeadsModel",
-    "OwlViTTextModel",
-    "OwlViTVisionModel",
-    "Owlv2TextModel",
-    "Owlv2VisionModel",
-    "OwlViTForObjectDetection",
-    "PatchTSMixerForPrediction",
-    "PatchTSMixerForPretraining",
-    "RagModel",
-    "RagSequenceForGeneration",
-    "RagTokenForGeneration",
-    "RealmEmbedder",
-    "RealmForOpenQA",
-    "RealmScorer",
-    "RealmReader",
-    "TFDPRReader",
-    "TFGPT2DoubleHeadsModel",
-    "TFLayoutLMForQuestionAnswering",
-    "TFOpenAIGPTDoubleHeadsModel",
-    "TFRagModel",
-    "TFRagSequenceForGeneration",
-    "TFRagTokenForGeneration",
-    "Wav2Vec2ForCTC",
-    "HubertForCTC",
-    "SEWForCTC",
-    "SEWDForCTC",
-    "XLMForQuestionAnswering",
-    "XLNetForQuestionAnswering",
-    "SeparableConv1D",
-    "VisualBertForRegionToPhraseAlignment",
-    "VisualBertForVisualReasoning",
-    "VisualBertForQuestionAnswering",
-    "VisualBertForMultipleChoice",
-    "TFWav2Vec2ForCTC",
-    "TFHubertForCTC",
-    "XCLIPVisionModel",
-    "XCLIPTextModel",
-    "AltCLIPTextModel",
-    "AltCLIPVisionModel",
-    "AltRobertaModel",
-    "TvltForAudioVisualClassification",
-    "BarkCausalModel",
-    "BarkCoarseModel",
-    "BarkFineModel",
-    "BarkSemanticModel",
-    "MusicgenMelodyModel",
-    "MusicgenModel",
-    "MusicgenForConditionalGeneration",
-    "SpeechT5ForSpeechToSpeech",
-    "SpeechT5ForTextToSpeech",
-    "SpeechT5HifiGan",
-    "VitMatteForImageMatting",
-    "SeamlessM4TTextToUnitModel",
-    "SeamlessM4TTextToUnitForConditionalGeneration",
-    "SeamlessM4TCodeHifiGan",
-    "SeamlessM4TForSpeechToSpeech",  # no auto class for speech-to-speech
-    "TvpForVideoGrounding",
-    "SeamlessM4Tv2NARTextToUnitModel",
-    "SeamlessM4Tv2NARTextToUnitForConditionalGeneration",
-    "SeamlessM4Tv2CodeHifiGan",
-    "SeamlessM4Tv2ForSpeechToSpeech",  # no auto class for speech-to-speech
-    "SegGptForImageSegmentation",
-    "SiglipVisionModel",
-    "SiglipTextModel",
-    "ChameleonVQVAE",  # no autoclass for VQ-VAE models
-    "VitPoseForPoseEstimation",
-    "CLIPTextModel",
-    "MoshiForConditionalGeneration",  # no auto class for speech-to-speech
-    "Emu3VQVAE",  # no autoclass for VQ-VAE models
-    "Emu3TextModel",  # Building part of bigger (tested) model
-    "Kosmos2_5TextModel",
-    "Kosmos2_5TextForCausalLM",
-    "Kosmos2_5VisionModel"
+    # Update this list for models that are not in any of the auto MODEL_XXX_MAPPING. Being in this list is an exception and
+    # should **not** be the rule.
+    IGNORE_NON_AUTO_CONFIGURED = PRIVATE_MODELS.copy() + [
+        # models to ignore for model xxx mapping
+        "AlignTextModel",
+        "AlignVisionModel",
+        "ClapTextModel",
+        "ClapTextModelWithProjection",
+        "ClapAudioModel",
+        "ClapAudioModelWithProjection",
+        "Blip2TextModelWithProjection",
+        "Blip2VisionModelWithProjection",
+        "Blip2QFormerModel",
+        "Blip2VisionModel",
+        "ErnieMForInformationExtraction",
+        "FastSpeech2ConformerHifiGan",
+        "FastSpeech2ConformerWithHifiGan",
+        "GitVisionModel",
+        "GraphormerModel",
+        "GraphormerForGraphClassification",
+        "BlipForImageTextRetrieval",
+        "BlipForQuestionAnswering",
+        "BlipVisionModel",
+        "BlipTextLMHeadModel",
+        "BlipTextModel",
+        "BrosSpadeEEForTokenClassification",
+        "BrosSpadeELForTokenClassification",
+        "TFBlipForConditionalGeneration",
+        "TFBlipForImageTextRetrieval",
+        "TFBlipForQuestionAnswering",
+        "TFBlipVisionModel",
+        "TFBlipTextLMHeadModel",
+        "TFBlipTextModel",
+        "Swin2SRForImageSuperResolution",
+        "BridgeTowerForImageAndTextRetrieval",
+        "BridgeTowerForMaskedLM",
+        "BridgeTowerForContrastiveLearning",
+        "CLIPSegForImageSegmentation",
+        "CLIPSegVisionModel",
+        "CLIPSegTextModel",
+        "EsmForProteinFolding",
+        "GPTSanJapaneseModel",
+        "TimeSeriesTransformerForPrediction",
+        "InformerForPrediction",
+        "AutoformerForPrediction",
+        "PatchTSTForPretraining",
+        "PatchTSTForPrediction",
+        "JukeboxVQVAE",
+        "JukeboxPrior",
+        "SamModel",
+        "DPTForDepthEstimation",
+        "DecisionTransformerGPT2Model",
+        "GLPNForDepthEstimation",
+        "ViltForImagesAndTextClassification",
+        "ViltForImageAndTextRetrieval",
+        "ViltForTokenClassification",
+        "ViltForMaskedLM",
+        "PerceiverForMultimodalAutoencoding",
+        "PerceiverForOpticalFlow",
+        "SegformerDecodeHead",
+        "TFSegformerDecodeHead",
+        "FlaxBeitForMaskedImageModeling",
+        "BeitForMaskedImageModeling",
+        "ChineseCLIPTextModel",
+        "ChineseCLIPVisionModel",
+        "CLIPTextModelWithProjection",
+        "CLIPVisionModelWithProjection",
+        "ClvpForCausalLM",
+        "ClvpModel",
+        "GroupViTTextModel",
+        "GroupViTVisionModel",
+        "TFCLIPTextModel",
+        "TFCLIPVisionModel",
+        "TFGroupViTTextModel",
+        "TFGroupViTVisionModel",
+        "FlaxCLIPTextModel",
+        "FlaxCLIPTextModelWithProjection",
+        "FlaxCLIPVisionModel",
+        "FlaxWav2Vec2ForCTC",
+        "DetrForSegmentation",
+        "Pix2StructVisionModel",
+        "Pix2StructTextModel",
+        "ConditionalDetrForSegmentation",
+        "DPRReader",
+        "FlaubertForQuestionAnswering",
+        "FlavaImageCodebook",
+        "FlavaTextModel",
+        "FlavaImageModel",
+        "FlavaMultimodalModel",
+        "GPT2DoubleHeadsModel",
+        "GPTSw3DoubleHeadsModel",
+        "InstructBlipVisionModel",
+        "InstructBlipQFormerModel",
+        "InstructBlipVideoVisionModel",
+        "InstructBlipVideoQFormerModel",
+        "LayoutLMForQuestionAnswering",
+        "LukeForMaskedLM",
+        "LukeForEntityClassification",
+        "LukeForEntityPairClassification",
+        "LukeForEntitySpanClassification",
+        "MgpstrModel",
+        "OpenAIGPTDoubleHeadsModel",
+        "OwlViTTextModel",
+        "OwlViTVisionModel",
+        "Owlv2TextModel",
+        "Owlv2VisionModel",
+        "OwlViTForObjectDetection",
+        "PatchTSMixerForPrediction",
+        "PatchTSMixerForPretraining",
+        "RagModel",
+        "RagSequenceForGeneration",
+        "RagTokenForGeneration",
+        "RealmEmbedder",
+        "RealmForOpenQA",
+        "RealmScorer",
+        "RealmReader",
+        "TFDPRReader",
+        "TFGPT2DoubleHeadsModel",
+        "TFLayoutLMForQuestionAnswering",
+        "TFOpenAIGPTDoubleHeadsModel",
+        "TFRagModel",
+        "TFRagSequenceForGeneration",
+        "TFRagTokenForGeneration",
+        "Wav2Vec2ForCTC",
+        "HubertForCTC",
+        "SEWForCTC",
+        "SEWDForCTC",
+        "XLMForQuestionAnswering",
+        "XLNetForQuestionAnswering",
+        "SeparableConv1D",
+        "VisualBertForRegionToPhraseAlignment",
+        "VisualBertForVisualReasoning",
+        "VisualBertForQuestionAnswering",
+        "VisualBertForMultipleChoice",
+        "TFWav2Vec2ForCTC",
+        "TFHubertForCTC",
+        "XCLIPVisionModel",
+        "XCLIPTextModel",
+        "AltCLIPTextModel",
+        "AltCLIPVisionModel",
+        "AltRobertaModel",
+        "TvltForAudioVisualClassification",
+        "BarkCausalModel",
+        "BarkCoarseModel",
+        "BarkFineModel",
+        "BarkSemanticModel",
+        "MusicgenMelodyModel",
+        "MusicgenModel",
+        "MusicgenForConditionalGeneration",
+        "SpeechT5ForSpeechToSpeech",
+        "SpeechT5ForTextToSpeech",
+        "SpeechT5HifiGan",
+        "VitMatteForImageMatting",
+        "SeamlessM4TTextToUnitModel",
+        "SeamlessM4TTextToUnitForConditionalGeneration",
+        "SeamlessM4TCodeHifiGan",
+        "SeamlessM4TForSpeechToSpeech",  # no auto class for speech-to-speech
+        "TvpForVideoGrounding",
+        "SeamlessM4Tv2NARTextToUnitModel",
+        "SeamlessM4Tv2NARTextToUnitForConditionalGeneration",
+        "SeamlessM4Tv2CodeHifiGan",
+        "SeamlessM4Tv2ForSpeechToSpeech",  # no auto class for speech-to-speech
+        "SegGptForImageSegmentation",
+        "SiglipVisionModel",
+        "SiglipTextModel",
+        "ChameleonVQVAE",  # no autoclass for VQ-VAE models
+        "VitPoseForPoseEstimation",
+        "CLIPTextModel",
+        "MoshiForConditionalGeneration",  # no auto class for speech-to-speech
+        "Emu3VQVAE",  # no autoclass for VQ-VAE models
+        "Emu3TextModel",  # Building part of bigger (tested) model
+        "Kosmos2_5TextModel",
+        "Kosmos2_5TextForCausalLM",
+        "Kosmos2_5VisionModel"
 ]
 
 # DO NOT edit this list!
