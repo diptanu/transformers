@@ -117,6 +117,18 @@ class CircleCIJob:
         }
         if self.resource_class is not None:
             job["resource_class"] = self.resource_class
+        if self.parallelism is not None:
+            job["parallelism"] = self.parallelism
+        steps = [
+            "checkout",
+            {"attach_workspace": {"at": "test_preparation"}},
+        ]
+        steps.extend([{"run": l} for l in self.install_steps])
+        steps.append({"run": {"name": "Show installed libraries and their size", "command": """du -h -d 1 "$(pip -V | cut -d ' ' -f 16 | sed 's/pip//g')" | grep -vE "dist-info|_distutils_hack|__pycache__" | sort -h | tee installed.txt || true"""}})
+        steps.append({"run": {"name": "Show installed libraries and their versions", "command": """pip list --format=freeze | tee installed.txt || true"""}})
+
+        steps.append({"run":{"name":"Show biggest libraries","command":"""dpkg-query --show --showformat='${Installed-Size}\t${Package}\n' | sort -rh | head -25 | sort -h | awk '{ package=$2; sub(".*/", "", package); printf("%.5f GB %s\n", $1/10216/10216, package)}' || true"""}})
+        steps.append({"store_artifacts": {"path": "installed.txt"}})
 
         all_options = {**COMMON_PYTEST_OPTIONS, **self.pytest_options}
         pytest_flags = [f"--{key}={value}" if (value is not None or key in ["doctest-modules"]) else f"-{key}" for key, value in all_options.items()]
@@ -206,7 +218,7 @@ generate_job = CircleCIJob(
     docker_image=[{"image": "huggingface/transformers-torch-light"}],
     marker="generate",
     parallelism=6,
-    pytest_num_workers=4
+    pytest_num_workers=16
 )
 
 tokenization_job = CircleCIJob(
@@ -225,7 +237,7 @@ tf_job = CircleCIJob(
     "tf",
     docker_image=[{"image":"huggingface/transformers-tf-light"}],
     parallelism=6,
-    pytest_num_workers=4,
+    pytest_num_workers=16,
 )
 
 
@@ -235,6 +247,7 @@ flax_job = CircleCIJob(
     parallelism=6,
     pytest_num_workers=16,
     resource_class="2xlarge",
+    pytest_num_workers=16
 )
 
 
