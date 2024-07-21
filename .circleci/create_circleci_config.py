@@ -15,11 +15,11 @@
 
 import argparse
 import copy
-import glob
 import os
+import random
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
-
+import glob
 import yaml
 
 
@@ -206,6 +206,7 @@ generate_job = CircleCIJob(
     docker_image=[{"image": "huggingface/transformers-torch-light"}],
     marker="generate",
     parallelism=6,
+    pytest_num_workers=4
 )
 
 tokenization_job = CircleCIJob(
@@ -224,6 +225,7 @@ tf_job = CircleCIJob(
     "tf",
     docker_image=[{"image":"huggingface/transformers-tf-light"}],
     parallelism=6,
+    pytest_num_workers=4,
 )
 
 
